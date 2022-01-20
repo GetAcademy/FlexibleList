@@ -2,38 +2,50 @@
 
 namespace FlexibleList
 {
-    internal class FlexibleList
+    internal class FlexibleList<T>
     {
-        private int[] _numbers;
+        private T[] _values;
         private int _index;
 
         public FlexibleList()
         {
-            _numbers = new int[4];
+            _values = new T[4];
             _index = 0;
         }
-        public void Add(string numberStr)
+
+        public void Remove(int index)
         {
-            var number = Convert.ToInt32(numberStr);
-            Add(number);
+            for (var i = index; i < _values.Length-1; i++)
+            {
+                _values[i] = _values[i+1];
+            }
+
+            _values[_index-1] = default(T);
+            _index--;
         }
 
-        public void Add(int number)
+        //public void Add(string numberStr)
+        //{
+        //    var value = Convert.ToInt32(numberStr);
+        //    Add(value);
+        //}
+
+        public void Add(T value)
         {
-            if (_index >= _numbers.Length)
+            if (_index >= _values.Length)
             {
-                Console.WriteLine($"Dobler kapasitet til {_numbers.Length * 2}");
-                var newNumbers = new int[_numbers.Length * 2];
-                Array.Copy(_numbers, newNumbers, _numbers.Length);
-                _numbers = newNumbers;
+                Console.WriteLine($"Dobler kapasitet til {_values.Length * 2}");
+                var newValues = new T[_values.Length * 2];
+                Array.Copy(_values, newValues, _values.Length);
+                _values = newValues;
             }
-            _numbers[_index] = number;
+            _values[_index] = value;
             _index++;
         }
 
         public string Get()
         {
-            return "Tallene er: " + string.Join(',', _numbers);
+            return "Tallene er: " + string.Join('-', _values);
         }
     }
 }

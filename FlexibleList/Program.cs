@@ -6,12 +6,22 @@ namespace FlexibleList
     {
         static void Main(string[] args)
         {
-            var list = new FlexibleList();
+            var list = new FlexibleList<bool>();
             while (true)
             {
                 Console.Write("Skriv et tall: ");
-                var number = Console.ReadLine();
-                list.Add(number);
+                var numberOrCommand = Console.ReadLine();
+                if (numberOrCommand.StartsWith("-"))
+                {
+                    var index = Convert.ToInt32(numberOrCommand.Substring(1));
+                    list.Remove(index);
+                }
+                else
+                {
+                    var number = Convert.ToBoolean(numberOrCommand);
+                    list.Add(number);
+                }
+
                 Console.WriteLine(list.Get());
             }
         }
